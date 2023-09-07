@@ -13,7 +13,7 @@ def run_shell(shell):
     cmd.communicate()
     return cmd.returncode
 
-# 分割输入job列表
+# 分割输入jobs列表
 fileList = sys.argv[1].split(',')
 
 for fileName in fileList:
