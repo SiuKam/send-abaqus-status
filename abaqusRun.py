@@ -29,13 +29,14 @@ for fileName in fileList:
     staName = fileName + '.sta'
     statFile = open(staName, 'r')
     lines = statFile.readlines()
+    state = lines[-1].split(' ')[-1]
     # 选取文件后两行，按需选取
     mailContent = '<p>' + lines[-3] + '<br>' + lines[-1] + '</p>'
     # 收发件信息
     message = Mail(
         from_email='from@email.com',
         to_emails='to@email.com',
-        subject=lines[-1],
+        subject=fileName + ' ' + state,
         html_content=mailContent)
     try:
         # 替换SendGrid API Key
