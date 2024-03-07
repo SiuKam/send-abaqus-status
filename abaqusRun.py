@@ -42,7 +42,7 @@ for fileName in fileList:
     message = Mail(
         from_email='from@email.com',
         to_emails='to@email.com',
-        subject=str.join(fileName, ' ', res),
+        subject='{} {}'.format(fileName, res),
         html_content=mailContent)
     try:
         # 替换SendGrid API Key
