@@ -27,12 +27,12 @@ for fileName in fileList:
     print('===========abaqus alert launch===========')
     # 读取status文件
     staName = fileName + '.sta'
-    statFile = open(staName, 'r')
-    lines = statFile.readlines()
+    with open(staName, 'r') as statFile:
+        lines = statFile.readlines()
     state = lines[-1].split(' ')[-1]
-    if state == 'SUCCESSFULLY':
+    if state == 'SUCCESSFULLY\n':
         res = 'finished'
-    elif state == 'COMPLETED':
+    elif state == 'COMPLETED\n':
         res = 'NOT finished'
     else:
         res = 'state unknow'
