@@ -19,7 +19,7 @@ fileList = sys.argv[1].split(',')
 for fileName in fileList:
     print('===========abaqus analysis begin===========')
     # abaqus运行命令，按需修改
-    abqCommand = 'abq2020 job=' + fileName + ' cpus=22 interactive ask_delete=OFF'
+    abqCommand = 'abq2020 job=' + fileName + ' cpus=32 interactive ask_delete=OFF'
     print(run_shell(abqCommand))
     print('===========abaqus analysis end===========')
     
