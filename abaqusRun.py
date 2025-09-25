@@ -1,8 +1,6 @@
-# using SendGrid's Python Library
-# https://github.com/sendgrid/sendgrid-python
-# import os
+import os
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from mailgun.client import Client
 import sys
 import subprocess
 
@@ -38,20 +36,20 @@ for fileName in fileList:
         res = 'state unknow'
     # 选取文件后两行，按需选取
     mailContent = '<p>' + lines[-3] + '<br>' + lines[-1] + '</p>'
+    mailSubject = fileName + res
     # 收发件信息
-    message = Mail(
-        from_email='from@email.com',
-        to_emails='to@email.com',
-        subject='{} {}'.format(fileName, res),
-        html_content=mailContent)
+    data = {
+        "from": os.getenv("MESSAGES_FROM", "test@test.com"),
+        "to": os.getenv("MESSAGES_TO", "recipient@example.com"),
+        "subject": mailSubject,
+        "text": mailContent,
+        "o:tag": "Python test",
+    }
     try:
-        # 替换SendGrid API Key
-        sg = SendGridAPIClient('SendGridApiKey')
-        response = sg.send(message)
-        print('alert mail sent')
-        # print(response.status_code)
-        # print(response.body)
-        # print(response.headers)
+        key: str = os.environ["APIKEY"]
+        domain: str = os.environ["DOMAIN"]
+        client: Client = Client(auth=("api", key))
+        req = client.messages.create(data=data, domain=domain)
     except Exception as e:
         print(e.message)
 
